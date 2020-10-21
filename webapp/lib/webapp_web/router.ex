@@ -1,5 +1,6 @@
 defmodule WebappWeb.Router do
   use WebappWeb, :router
+
   use Pow.Phoenix.Router
 
   pipeline :browser do
@@ -19,6 +20,12 @@ defmodule WebappWeb.Router do
     pipe_through :browser
 
     pow_routes()
+  end
+
+  scope "/db", WebappWeb.DB, as: :db do
+    pipe_through :browser
+
+    get "/users", UserController, :index
   end
 
   scope "/", WebappWeb do

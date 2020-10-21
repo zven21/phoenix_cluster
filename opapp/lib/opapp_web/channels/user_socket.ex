@@ -3,6 +3,7 @@ defmodule OpappWeb.UserSocket do
 
   ## Channels
   # channel "room:*", OpappWeb.RoomChannel
+  # channel("user:*", )
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

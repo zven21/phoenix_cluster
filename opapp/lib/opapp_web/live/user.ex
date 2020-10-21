@@ -5,7 +5,8 @@ defmodule OpappWeb.Live.User do
 
   @impl true
   def mount(_params, _session, socket) do
-    if connected?(socket), do: Users.subscribe()
+    # if connected?(socket), do: Users.subscribe()
+    OpappWeb.Endpoint.subscribe("users")
 
     users = Users.list_users()
 
@@ -36,8 +37,22 @@ defmodule OpappWeb.Live.User do
     """
   end
 
+  # @impl true
+  # def handle_info({:user_online_updated, user}, socket) do
+  #   users =
+  #     socket.assigns.users
+  #     |> Enum.map(fn u -> if u.id == user.id, do: user, else: u end)
+
+  #   {:noreply, assign(socket, users: users)}
+  # end
+
   @impl true
-  def handle_info({:user_online_updated, user}, socket) do
+  def handle_info(%Phoenix.Socket.Broadcast{
+    topic: "users",
+    event: "user_online_updated",
+    payload: %{user: user}
+  }, socket) do
+
     users =
       socket.assigns.users
       |> Enum.map(fn u -> if u.id == user.id, do: user, else: u end)

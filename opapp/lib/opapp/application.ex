@@ -6,17 +6,26 @@ defmodule Opapp.Application do
   use Application
 
   def start(_type, _args) do
+    topologies = [
+      example: [
+        strategy: Cluster.Strategy.Epmd,
+        config: [hosts: [:"webapp@127.0.0.1", :"opapp@127.0.0.1"]],
+      ]
+    ]
+
     children = [
       # Start the Ecto repository
       Opapp.Repo,
       # Start the Telemetry supervisor
       OpappWeb.Telemetry,
+
       # Start the PubSub system
       {Phoenix.PubSub, name: Opapp.PubSub},
       # Start the Endpoint (http/https)
-      OpappWeb.Endpoint
+      OpappWeb.Endpoint,
       # Start a worker by calling: Opapp.Worker.start_link(arg)
       # {Opapp.Worker, arg}
+      {Cluster.Supervisor, [topologies, [name: Webapp.ClusterSupervisor]]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

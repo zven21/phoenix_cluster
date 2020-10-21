@@ -14,10 +14,14 @@ defmodule OpappWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", OpappWeb do
+  scope "/db", OpappWeb.DB, as: :db do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    get "/users", UserController, :index
+  end
+
+  scope "/", OpappWeb do
+    pipe_through :browser
   end
 
   # Other scopes may use custom stacks.

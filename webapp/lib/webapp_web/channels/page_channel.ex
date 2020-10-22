@@ -32,17 +32,18 @@ defmodule WebappWeb.PageChannel do
     {:noreply, socket}
   end
 
-  # def terminate({:shutdown, :closed}, socket) do
-  #   %{current_user: user} = socket.assigns
+  def terminate({:shutdown, :closed}, socket) do
+    %{current_user: current_user} = socket.assigns
 
-  #   :ok =
-  #     Presence.untrack(
-  #       socket,
-  #       user.id
-  #     )
+    :ok =
+      Presence.untrack(
+        socket,
+        current_user.id
+      )
 
-  #   broadcast!(socket, "disconnect", %{user: user})
-  # end
+    WebappWeb.Endpoint.broadcast("users", "user_online_updated", %{user: current_user |> Map.put(:online, false)})
+    broadcast!(socket, "disconnect", %{user: current_user})
+  end
 
   def handle_in("user:focus", focus, socket) do
     %{current_user: current_user} = socket.assigns
@@ -56,7 +57,7 @@ defmodule WebappWeb.PageChannel do
         end
       )
 
-    # broadcast!(socket, )
+    WebappWeb.Endpoint.broadcast("users", "user_online_updated", %{user: current_user |> Map.put(:online, true)})
 
     {:noreply, socket}
   end

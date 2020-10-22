@@ -6,11 +6,12 @@ class Collaboration extends React.Component {
 
   componentDidMount() {
     this.channel = getChannel(this.props.dispatch);
+    this.channel.push('user:focus', {})
   }
 
-  componentDidUpdate(prevProps) {
-    this.channel.push('user:focus', {});
-  }
+  // componentDidUpdate(prevProps) {
+  //   this.channel.push('user:focus', {});
+  // }
 
   render() {
     console.log('props,', this.props)

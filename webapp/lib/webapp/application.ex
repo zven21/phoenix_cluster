@@ -21,6 +21,7 @@ defmodule Webapp.Application do
       # Cluster
       # Start the PubSub system
       {Phoenix.PubSub, name: Webapp.PubSub},
+      WebappWeb.Presence,
       # Start the Endpoint (http/https)
       WebappWeb.Endpoint,
       # Start a worker by calling: Webapp.Worker.start_link(arg)

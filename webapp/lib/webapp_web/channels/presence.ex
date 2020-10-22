@@ -6,6 +6,6 @@ defmodule WebappWeb.Presence do
   docs for more details.
   """
   use Phoenix.Presence,
-    otp_app: :hcbizchat,
+    otp_app: :webapp,
     pubsub_server: Webapp.PubSub
 end

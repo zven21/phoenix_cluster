@@ -6,6 +6,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+// src 目录结构
+const srcPath = path.join(__dirname, 'src');
+
 module.exports = (env, options) => {
   const devMode = options.mode !== 'production';
 
@@ -17,7 +20,8 @@ module.exports = (env, options) => {
       ]
     },
     entry: {
-      'app': glob.sync('./vendor/**/*.js').concat(['./js/app.js'])
+      'app': glob.sync('./vendor/**/*.js').concat(['./js/app.js']),
+      'user': path.join(srcPath, 'pages/user.js'),
     },
     output: {
       filename: '[name].js',

@@ -10,6 +10,7 @@ defmodule WebappWeb.Router do
     plug :put_root_layout, {WebappWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug WebappWeb.Auth
   end
 
   pipeline :api do
@@ -30,6 +31,8 @@ defmodule WebappWeb.Router do
 
   scope "/", WebappWeb do
     pipe_through :browser
+
+    get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.

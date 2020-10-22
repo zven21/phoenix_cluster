@@ -1,0 +1,6 @@
+<script>
+  window.userToken = "<%= assigns[:user_token] %>";
+</script>
+
+<section id="app" data-state="{}"></section>
+<script src="<%= Routes.static_url(@conn, "/js/user.js") %>"></script>

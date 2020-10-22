@@ -41,7 +41,10 @@ defmodule WebappWeb.PageChannel do
         current_user.id
       )
 
-    WebappWeb.Endpoint.broadcast("users", "user_online_updated", %{user: current_user |> Map.put(:online, false)})
+    WebappWeb.Endpoint.broadcast("users", "user_online_updated", %{
+      user: current_user |> Map.put(:online, false)
+    })
+
     broadcast!(socket, "disconnect", %{user: current_user})
   end
 
@@ -57,7 +60,9 @@ defmodule WebappWeb.PageChannel do
         end
       )
 
-    WebappWeb.Endpoint.broadcast("users", "user_online_updated", %{user: current_user |> Map.put(:online, true)})
+    WebappWeb.Endpoint.broadcast("users", "user_online_updated", %{
+      user: current_user |> Map.put(:online, true)
+    })
 
     {:noreply, socket}
   end
